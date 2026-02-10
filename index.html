@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">    <title>LifeOS Dashboard</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="script.js" defer></script>
+</head>
+    <body>
+        <div class="app-container">
+            <aside class="sidebar">
+                <h2>L-OS</h2>
+                <nav>
+                    <ul>
+                        <li class="active" onclick="switchView('home')">Home</li>
+                        <li onclick="switchView('tasks')">Tasks</li>
+                        <li onclick="switchView('settings')">Settings</li>
+                    </ul>
+                </nav>
+            </aside>
+
+            <main class="dashboard">
+                <header class="dashboard-header">
+                    <div class="header-left">
+                        <h1 id="greeting">Good Morning, User.</h1>
+                        <button id="focus-toggle">👁️ Focus Mode</button>
+                    </div>
+                    <div class="header-right">
+                        <div id="clock">00:00:00</div>
+                    </div>
+                </header>
+                <div id="view-home" class="view-section">
+                <div class="widget-grid">
+                    <div class="card task-widget">
+                            <div class="card-header">
+                                <h3>My Tasks</h3>
+                                <span id="task-count">0 remaining</span>
+                            </div>
+                            
+                            <div class="input-group">
+                                <input type="text" id="todo-input" placeholder="What needs to be done?">
+                                <button id="add-btn">+</button>
+                            </div>
+
+                            <ul id="todo-list">
+                                </ul>
+                        </div>
+
+                        <div class="card weather-widget">
+                            <div class="weather-header">
+                                <h3>Weather</h3>
+                                <span id="city-name">Loading...</span>
+                            </div>
+                            
+                            <div class="weather-body">
+                                <div id="temperature">--°C</div>
+                                <div class="weather-details">
+                                    <p>Wind: <span id="wind-speed">--</span> km/h</p>
+                                    <p>Humidity: <span id="humidity">--</span>%</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card note-widget">
+                            <div class="card-header">
+                                <h3>Quick Notes</h3>
+                            </div>
+                            <textarea id="quick-note" placeholder="Write something... (Auto-saves)"></textarea>
+                        </div>
+                    </div>
+                    <div class="search-container">
+                        <div class="quick-links">
+                            <a href="https://www.youtube.com" target="_blank" class="link-card">
+                                <span class="icon">📺</span>
+                                <span>YouTube</span>
+                            </a>
+                            
+                            <a href="https://chatgpt.com" target="_blank" class="link-card">
+                                <span class="icon">🤖</span>
+                                <span>ChatGPT</span>
+                            </a>
+                            
+                            <a href="https://github.com" target="_blank" class="link-card">
+                                <span class="icon">💻</span>
+                                <span>GitHub</span>
+                            </a>
+            
+                            <a href="https://mail.google.com" target="_blank" class="link-card">
+                                <span class="icon">📧</span>
+                                <span>Gmail</span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <div id="view-tasks" class="view-section hidden">
+                    <div class="kanban-board">
+                        <div class="kanban-column" id="col-todo">
+                            <div class="column-header header-todo">
+                                <h3>🚀 To Do</h3>
+                            </div>
+                            <div class="kanban-list" id="list-todo">
+                                </div>
+                        </div>
+                
+                        <div class="kanban-column" id="col-doing">
+                            <div class="column-header header-doing">
+                                <h3>⚡ In Progress</h3>
+                            </div>
+                            <div class="kanban-list" id="list-doing"></div>
+                        </div>
+                
+                        <div class="kanban-column" id="col-done">
+                            <div class="column-header header-done">
+                                <h3>✅ Done</h3>
+                            </div>
+                            <div class="kanban-list" id="list-done"></div>
+                        </div>
+                    </div>
+                </div>
+                    <div id="view-settings" class="view-section hidden">
+                        <div class="settings-container">
+                            <h2>System Configuration</h2>
+                            <div class="setting-card">
+                                <h3>👤 User Profile</h3>
+                                <p>What should the system call you?</p>
+                                <div class="input-group">
+                                    <input type="text" id="name-input" placeholder="Enter your name...">
+                                    <button onclick="saveName()">Save</button>
+                                </div>
+                            </div>
+                    
+                            <div class="setting-card danger-zone">
+                                <h3>⚠️ Reset Data</h3>
+                                <p>Clear all tasks, notes, and settings. This cannot be undone.</p>
+                                <button onclick="resetSystem()" class="danger-btn">Factory Reset</button>
+                            </div>
+                            <div class="settings-container">
+                                <div class="setting-card">
+                                    <h3>🎨 Custom Wallpaper</h3>
+                                    <p>Paste a URL to an image (Unsplash, etc.) to set your background.</p>
+                                    <div class="input-group">
+                                        <input type="text" id="bg-input" placeholder="https://example.com/image.jpg">
+                                        <button onclick="saveWallpaper()">Set Background</button>
+                                    </div>
+                                    <button onclick="resetWallpaper()" style="margin-top: 10px; background: transparent; border: 1px solid #555;">🔄 Use Random Shuffle</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+            </main>
+        </div>
+        <div id="ai-widget">
+            <button id="ai-toggle" onclick="toggleChat()">
+                <span class="pulse-ring"></span>
+                🤖
+            </button>
+            
+            <div id="chat-window" class="hidden">
+                <div class="chat-header">
+                    <div class="bot-info">
+                        <span class="status-dot"></span>
+                        <span>NEXUS AI</span>
+                    </div>
+                    <button onclick="toggleChat()" class="close-chat">✖</button>
+                </div>
+                
+                <div id="chat-messages">
+                    <div class="message bot-msg">
+                        <b>Greetings. Systems Online.</b><br><br>
+                        <b>Available Commands:</b><br>
+                        • <b>/task [name]</b> - Add to To-Do<br>
+                        • <b>/note [text]</b> - Add to Notes<br>
+                        • <b>/clear</b> - Clear chat history<br>
+                        • <b>time</b> - Show clock
+                    </div>
+                </div>
+                <div class="chat-input-area">
+                    <input type="text" id="ai-input" placeholder="Ask me anything..." autocomplete="off">
+                    <button onclick="sendMessage()">➤</button>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>

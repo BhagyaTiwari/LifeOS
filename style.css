@@ -1,0 +1,890 @@
+:root {
+    /* Variables: Change these to change the whole look */
+    --bg-dark: #121212;
+    --bg-panel: #1e1e1e;
+    --accent: #bb86fc;
+    --text-main: #ffffff;
+    --text-muted: #b0b0b0;
+    --font-stack: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* The Big Layout */
+.app-container {
+    display: grid;
+    grid-template-columns: 250px 1fr; /* Sidebar is 250px, Content is the rest */
+    height: 100%;
+}
+
+/* Sidebar Styles */
+.sidebar {
+    background-color: var(--bg-panel);
+    padding: 20px;
+    border-right: 1px solid #333;
+}
+
+.sidebar h2 {
+    color: var(--accent);
+    margin-bottom: 40px;
+}
+
+.sidebar ul {
+    list-style: none;
+}
+
+.sidebar li {
+    padding: 10px 0;
+    color: var(--text-muted);
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.sidebar li:hover, .sidebar li.active {
+    color: var(--text-main);
+    font-weight: bold;
+}
+
+/* Dashboard Styles */
+.dashboard {
+    padding: 40px;
+}
+
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.clock-display {
+    font-size: 2rem;
+    font-weight: bold;
+    color: var(--accent);
+    font-family: monospace; /* Looks like a digital clock */
+}
+
+/* Placeholder Card Style */
+.card {
+    background: var(--bg-panel);
+    padding: 20px;
+    border-radius: 12px;
+    width: 300px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.3);
+}
+
+/* --- Task Widget Styles --- */
+
+.task-widget {
+    min-width: 350px;
+    min-height: 50px;
+    display: flex;
+    flex-direction: column;
+}
+
+.card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+#task-count {
+    font-size: 0.8rem;
+    color: var(--text-muted);
+}
+
+/* Input Area */
+.input-group {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+#todo-input {
+    flex: 1; /* Takes up all available space */
+    background: #2b2b2b;
+    border: 1px solid #333;
+    padding: 10px;
+    border-radius: 6px;
+    color: white;
+    outline: none;
+}
+
+#todo-input:focus {
+    border-color: var(--accent);
+}
+
+#add-btn {
+    background: var(--accent);
+    border: none;
+    color: black;
+    width: 40px;
+    border-radius: 6px;
+    font-weight: bold;
+    cursor: pointer;
+    font-size: 1.2rem;
+}
+
+#add-btn:hover {
+    opacity: 0.9;
+}
+
+/* The List */
+#todo-list {
+    list-style: none;
+    flex: 1;
+    overflow-y: auto; /* Scroll if list gets too long */
+}
+
+.todo-item {
+    background: rgba(255, 255, 255, 0.05);
+    padding: 10px;
+    margin-bottom: 8px;
+    border-radius: 6px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    transition: 0.2s;
+}
+
+.todo-item:hover {
+    background: rgba(255, 255, 255, 0.1);
+}
+
+/* When a task is completed */
+.todo-item.completed span {
+    text-decoration: line-through;
+    color: var(--text-muted);
+}
+
+.delete-btn {
+    background: transparent;
+    border: none;
+    color: #ff5555;
+    cursor: pointer;
+    font-size: 0.9rem;
+    margin-left: 10px;
+}
+/* --- Weather Widget Styles --- */
+
+.weather-widget {
+    background: linear-gradient(135deg, #1e1e1e, #2a2a2a); /* Subtle gradient */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.weather-header {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+    color: var(--text-muted);
+}
+
+.weather-body {
+    text-align: center;
+}
+
+#temperature {
+    font-size: 4rem; /* Huge text */
+    font-weight: bold;
+    color: var(--text-main);
+    margin: 10px 0;
+}
+
+.weather-details {
+    display: flex;
+    justify-content: space-around;
+    background: rgba(0, 0, 0, 0.2);
+    padding: 10px;
+    border-radius: 8px;
+    margin-top: 15px;
+}
+
+.weather-details p {
+    font-size: 0.9rem;
+    color: var(--text-muted);
+}
+
+.weather-details span {
+    color: var(--accent);
+    font-weight: bold;
+}
+
+.widget-grid {
+    display: grid;
+    /* This forces 3 columns of equal size. */
+    grid-template-columns: repeat(3, 1fr); 
+    gap: 20px;
+    align-items: start;
+    max-width: 1200px; /* limits width so it doesn't stretch too far */
+    margin: 0 auto; /* Centers the whole grid in the middle of the screen */
+}
+
+/* --- Note Widget Styles --- */
+
+.note-widget {
+    display: flex;
+    flex-direction: column;
+    min-height: 50px; /* Match the other cards */
+}
+
+#quick-note {
+    flex: 1; /* Fill all remaining space */
+    background: transparent;
+    border: none;
+    color: var(--text-muted);
+    font-family: var(--font-stack);
+    font-size: 1rem;
+    resize: none; /* Disable manual resizing corner */
+    outline: none;
+    line-height: 1.5;
+    padding-top: 10px;
+}
+
+#quick-note:focus {
+    color: var(--text-main); /* Highlight text when typing */
+}
+
+/* --- Focus Mode Styles --- */
+
+#focus-toggle {
+    background: transparent;
+    border: 1px solid var(--text-muted);
+    color: var(--text-muted);
+    padding: 5px 10px;
+    border-radius: 20px;
+    cursor: pointer;
+    margin-top: 10px;
+    transition: 0.3s;
+}
+
+#focus-toggle:hover {
+    border-color: var(--accent);
+    color: var(--accent);
+}
+
+/* --- FIXED FOCUS MODE STYLES --- */
+
+#focus-toggle {
+    background: transparent;
+    border: 1px solid var(--text-muted);
+    color: var(--text-muted);
+    padding: 5px 10px;
+    border-radius: 20px;
+    cursor: pointer;
+    margin-top: 10px;
+    transition: 0.3s;
+}
+
+#focus-toggle:hover {
+    border-color: var(--accent);
+    color: var(--accent);
+}
+
+/* === WHEN FOCUS MODE IS ACTIVE === */
+
+/* 1. Kill the Grid Layout (Removes the "Ghost" sidebar space) */
+body.focus-active .app-container {
+    display: block; 
+}
+
+/* 2. Hide Sidebar, Widgets, and Search Bar */
+/* Update this rule to include .quick-links */
+body.focus-active .sidebar,
+body.focus-active .widget-grid,
+body.focus-active .search-container,
+body.focus-active #ai-widget,
+body.focus-active .quick-links {   /* <--- Added this line */
+    display: none; 
+}
+
+/* --- FORCE HIDE ALL CONTENT IN FOCUS MODE --- */
+body.focus-active .view-section {
+    display: none !important;
+}
+
+/* 3. Center the Dashboard Content */
+body.focus-active .dashboard {
+    display: flex;             /* Turn dashboard into a Flexbox */
+    flex-direction: column;    /* Stack items vertically */
+    justify-content: center;   /* Center Vertically */
+    align-items: center;       /* Center Horizontally */
+    height: 100vh;             /* Fill the screen height */
+    padding: 0;                /* Remove default padding */
+    width: 100%;               /* Fill the screen width */
+}
+
+/* 4. Style the Header (The only visible thing) */
+body.focus-active header {
+    flex-direction: column;    /* Stack Greeting on top of Clock */
+    align-items: center;       /* Center align text */
+    gap: 20px;                 /* Space between Greeting and Clock */
+    margin: 0;                 /* Remove default margins */
+    width: 100%;
+}
+
+/* 5. Make Text HUGE (Using Font-Size, not Scale) */
+body.focus-active #greeting {
+    font-size: 3rem;           /* Big Greeting */
+    text-align: center;        /* Ensure text is centered */
+}
+
+body.focus-active #clock {
+    font-size: 6rem;           /* GIANT Clock */
+    text-align: center;
+}
+
+body {
+    background-color: var(--bg-dark);
+    /* This prepares the background to cover the whole screen */
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: fixed; /* Parallax effect */
+    
+    color: var(--text-main);
+    font-family: var(--font-stack);
+    height: 100vh;
+    overflow: hidden;
+    position: relative; /* Needed for the overlay */
+}
+
+/* THE DARK OVERLAY (Makes text readable) */
+body::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.6); /* Darkens the image */
+    z-index: -1; /* Puts it behind text but in front of background */
+}
+/* --- Quick Links Styles --- */
+
+.quick-links {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    margin-bottom: 30px;
+    
+    /* ADD THIS LINE to push it away from the notes: */
+    margin-top: 50px; 
+    
+    flex-wrap: wrap;
+}
+
+.link-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background: rgba(30, 30, 30, 0.6); /* Glass effect */
+    padding: 15px;
+    border-radius: 12px;
+    text-decoration: none; /* Removes underline */
+    color: var(--text-main);
+    width: 100px;
+    transition: 0.3s;
+    backdrop-filter: blur(5px); /* Blurs background behind it */
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.link-card:hover {
+    background: var(--accent); /* Turns purple on hover */
+    color: black;
+    transform: translateY(-5px); /* Floats up */
+}
+
+.link-card .icon {
+    font-size: 2rem;
+    margin-bottom: 5px;
+}
+
+/* --- View Switcher Styles --- */
+
+/* Utility class to hide sections */
+.hidden {
+    display: none !important;
+}
+
+/* Animation for smooth switching */
+.view-section {
+    animation: fadeIn 0.4s ease;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* Optional: Style the new "Empty" views so they don't look broken */
+#view-tasks, #view-settings {
+    padding: 20px;
+    color: var(--text-muted);
+    text-align: center;
+}
+
+/* --- Kanban Board Styles (Auto-Growing) --- */
+
+.kanban-board {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr); /* 3 Equal Columns */
+    gap: 20px;
+    padding: 20px;
+    
+    /* 1. KEY FIX: This stops the columns from stretching to the bottom */
+    align-items: start; 
+}
+
+.kanban-column {
+    background: var(--bg-panel);
+    border-radius: 12px;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    
+    /* 2. No fixed height. It will grow with the list */
+    height: auto; 
+    box-shadow: 0 4px 6px rgba(0,0,0,0.3);
+}
+
+.column-header {
+    padding: 15px;
+    text-align: center;
+    font-weight: bold;
+    color: black;
+}
+
+/* Color Code the Headers */
+.header-todo { background: #ff7575; }
+.header-doing { background: #ffce75; }
+.header-done { background: #75ff8a; }
+
+.kanban-list {
+    /* 3. Give it a tiny minimum height so it doesn't look collapsed */
+    padding: 10px;
+    min-height: 60px; 
+}
+
+/* Card Styles (Unchanged) */
+.kanban-card {
+    background: rgba(255, 255, 255, 0.05);
+    padding: 15px;
+    margin-bottom: 10px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: 0.2s;
+    border: 1px solid transparent;
+}
+
+.kanban-card:hover {
+    background: rgba(255, 255, 255, 0.1);
+    transform: translateY(-2px);
+    border-color: var(--accent);
+}
+/* --- Settings Page Styles (Pro Version) --- */
+
+.settings-container {
+    max-width: 800px;
+    margin: 50px auto;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); /* Grid Layout */
+    gap: 25px;
+}
+
+.settings-container h2 {
+    grid-column: 1 / -1; /* Title spans full width */
+    text-align: center;
+    margin-bottom: 20px;
+    font-size: 2rem;
+    color: var(--text-main);
+    text-shadow: 0 0 10px rgba(187, 134, 252, 0.3);
+}
+
+.setting-card {
+    background: rgba(30, 30, 30, 0.6); /* Glass effect */
+    backdrop-filter: blur(10px);
+    padding: 30px;
+    border-radius: 16px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+    transition: transform 0.3s ease;
+}
+
+.setting-card:hover {
+    transform: translateY(-5px); /* Float effect */
+    border-color: var(--accent);
+}
+
+.setting-card h3 {
+    margin-bottom: 15px;
+    color: var(--accent);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.setting-card p {
+    color: var(--text-muted);
+    font-size: 0.95rem;
+    margin-bottom: 25px;
+    line-height: 1.5;
+}
+
+/* --- THE INPUT STYLING (No more white box!) --- */
+.setting-card input {
+    width: 100%;
+    background: #121212;
+    border: 1px solid #333;
+    padding: 12px 15px;
+    border-radius: 8px;
+    color: white;
+    font-size: 1rem;
+    outline: none;
+    transition: 0.3s;
+    margin-bottom: 15px;
+}
+
+.setting-card input:focus {
+    border-color: var(--accent);
+    box-shadow: 0 0 0 2px rgba(187, 134, 252, 0.2);
+}
+
+/* --- BUTTON STYLING --- */
+.setting-card button {
+    width: 100%;
+    padding: 12px;
+    border-radius: 8px;
+    border: none;
+    font-weight: bold;
+    cursor: pointer;
+    transition: 0.3s;
+    font-size: 1rem;
+}
+
+/* Save Button */
+.setting-card button:not(.danger-btn) {
+    background: var(--accent);
+    color: #000;
+}
+
+.setting-card button:not(.danger-btn):hover {
+    opacity: 0.9;
+    transform: scale(1.02);
+}
+
+/* Danger Button */
+.danger-btn {
+    background: rgba(255, 68, 68, 0.1);
+    color: #ff4444;
+    border: 1px solid #ff4444 !important;
+}
+
+.danger-btn:hover {
+    background: #ff4444;
+    color: white;
+}
+
+/* --- AI Bot Widget Styles --- */
+
+#ai-widget {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    z-index: 1000; /* Always on top */
+    font-family: var(--font-stack);
+}
+
+/* Floating Button */
+#ai-toggle {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    background: var(--accent);
+    border: none;
+    font-size: 2rem;
+    cursor: pointer;
+    box-shadow: 0 4px 15px rgba(187, 134, 252, 0.4);
+    transition: transform 0.3s;
+}
+
+#ai-toggle:hover {
+    transform: scale(1.1) rotate(10deg);
+}
+
+/* Chat Window */
+#chat-window {
+    position: absolute;
+    bottom: 80px;
+    right: 0;
+    width: 350px;
+    height: 450px;
+    background: rgba(20, 20, 20, 0.95);
+    backdrop-filter: blur(10px);
+    border: 1px solid var(--accent);
+    border-radius: 12px;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+    transition: opacity 0.3s, transform 0.3s;
+}
+
+#chat-window.hidden {
+    display: none; /* Logic handles class toggling */
+}
+
+/* Header */
+.chat-header {
+    background: var(--accent);
+    color: black;
+    padding: 10px 15px;
+    font-weight: bold;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.close-chat {
+    background: transparent;
+    border: none;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+/* Messages Area */
+#chat-messages {
+    flex: 1;
+    padding: 15px;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.message {
+    padding: 10px;
+    border-radius: 8px;
+    max-width: 80%;
+    font-size: 0.9rem;
+    line-height: 1.4;
+}
+
+.bot-msg {
+    background: rgba(255, 255, 255, 0.1);
+    align-self: flex-start;
+    border-top-left-radius: 0;
+}
+
+.user-msg {
+    background: var(--accent);
+    color: black;
+    align-self: flex-end;
+    border-bottom-right-radius: 0;
+}
+
+/* Input Area */
+.chat-input-area {
+    display: flex;
+    padding: 10px;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+#ai-input {
+    flex: 1;
+    background: transparent;
+    border: none;
+    color: white;
+    padding: 8px;
+    outline: none;
+}
+
+.chat-input-area button {
+    background: transparent;
+    border: none;
+    color: var(--accent);
+    cursor: pointer;
+    font-size: 1.2rem;
+}
+
+/* --- SCROLLING FIX FOR SETTINGS PAGE --- */
+
+#view-settings {
+    /* 1. Limit the height so it doesn't run off the screen */
+    height: 75vh; 
+    
+    /* 2. Enable scrolling only if content is too big */
+    overflow-y: auto; 
+    
+    /* 3. Add some breathing room at the bottom */
+    padding-bottom: 50px;
+    padding-right: 10px; /* Prevents scrollbar from touching content */
+}
+
+/* --- COOL SCROLLBAR STYLING (Optional) --- */
+/* This makes the scrollbar purple to match your theme */
+
+#view-settings::-webkit-scrollbar {
+    width: 8px; /* Skinny scrollbar */
+}
+
+#view-settings::-webkit-scrollbar-track {
+    background: rgba(255, 255, 255, 0.05); /* Dark track */
+    border-radius: 4px;
+}
+
+#view-settings::-webkit-scrollbar-thumb {
+    background: var(--accent); /* Purple handle */
+    border-radius: 4px;
+}
+
+#view-settings::-webkit-scrollbar-thumb:hover {
+    background: #ffffff; /* White when you grab it */
+}
+
+/* --- NEXUS AI STYLING --- */
+
+/* The Orb Button */
+#ai-toggle {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--accent), #7b2cbf);
+    border: 2px solid rgba(255, 255, 255, 0.2);
+    font-size: 1.8rem;
+    cursor: pointer;
+    box-shadow: 0 0 20px rgba(187, 134, 252, 0.6);
+    position: relative; /* For the pulse ring */
+    transition: transform 0.3s ease;
+    z-index: 9999;
+}
+
+#ai-toggle:hover {
+    transform: scale(1.1);
+}
+
+/* Pulsing Animation */
+.pulse-ring {
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    border-radius: 50%;
+    border: 2px solid var(--accent);
+    animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+    0% { transform: scale(1); opacity: 1; }
+    100% { transform: scale(1.6); opacity: 0; }
+}
+
+/* Header Status */
+.bot-info {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.status-dot {
+    width: 8px;
+    height: 8px;
+    background: #00ff88;
+    border-radius: 50%;
+    box-shadow: 0 0 5px #00ff88;
+}
+
+/* Typing Dots Animation */
+#typing-indicator {
+    padding: 10px 20px;
+    color: var(--text-muted);
+    font-size: 1.5rem;
+    display: flex;
+    gap: 5px;
+}
+
+#typing-indicator span {
+    animation: blink 1.4s infinite both;
+}
+
+#typing-indicator span:nth-child(2) { animation-delay: 0.2s; }
+#typing-indicator span:nth-child(3) { animation-delay: 0.4s; }
+
+@keyframes blink {
+    0% { opacity: 0.2; }
+    20% { opacity: 1; }
+    100% { opacity: 0.2; }
+}
+
+/* Ensure Chat Window is above everything */
+#chat-window {
+    z-index: 10000;
+}
+
+/* --- CLEAN MINIMALIST HEADER --- */
+.dashboard-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center; /* Center vertical alignment */
+    padding: 10px 40px;  /* Reduced padding */
+    margin-bottom: 30px;
+    
+    /* REMOVED: Background, Border, and Glass Effect */
+    background: transparent;
+    border: none;
+    backdrop-filter: none;
+}
+
+/* Greeting Section */
+.header-left {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start; /* Align text to the left */
+    gap: 5px;
+}
+
+#greeting {
+    font-size: 2.5rem;
+    font-weight: 700;
+    margin: 0;
+    /* Clean Gradient Text */
+    background: linear-gradient(to right, #ffffff, #a0a0a0);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+/* FIX: Compact Focus Button */
+#focus-toggle {
+    padding: 8px 20px;      /* Smaller padding */
+    font-size: 0.85rem;     /* Smaller text */
+    width: auto;            /* Don't stretch! */
+    min-width: 120px;       /* Fixed width for stability */
+    border-radius: 20px;    /* Pill shape */
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    margin-top: 10px;       /* Space from greeting */
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+#focus-toggle:hover {
+    background: var(--accent);
+    border-color: var(--accent);
+    color: #000;
+}
+
+/* FIX: Clock Styling (Sharper, Less Blurry) */
+#clock {
+    font-family: 'Courier New', monospace; /* Tech font */
+    font-size: 4rem;        /* Smaller than before (was 5rem) */
+    font-weight: 700;
+    color: whitesmoke;   /* Purple text */
+    line-height: 1;
+    
+    
+}
